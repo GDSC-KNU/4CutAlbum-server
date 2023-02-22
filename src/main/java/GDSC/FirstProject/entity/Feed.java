@@ -28,6 +28,6 @@ public class Feed {
 
     private String company;
 
-    private LocalDateTime dateTime;
+    private LocalDateTime createdDate;
 
 }
