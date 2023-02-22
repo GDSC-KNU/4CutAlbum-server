@@ -30,4 +30,5 @@ public class Feed {
 
     private LocalDateTime createdDate;
 
+    private String s3Key;
 }
