@@ -22,8 +22,6 @@ public class Feed {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Integer likes;
-
     private Integer peopleCount;
 
     private String company;
