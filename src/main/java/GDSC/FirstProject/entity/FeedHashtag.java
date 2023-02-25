@@ -23,4 +23,9 @@ public class FeedHashtag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hashtag_id")
     private Hashtag hashtag;
+
+    public FeedHashtag(Feed feed, Hashtag hashtag) {
+        this.feed = feed;
+        this.hashtag = hashtag;
+    }
 }
