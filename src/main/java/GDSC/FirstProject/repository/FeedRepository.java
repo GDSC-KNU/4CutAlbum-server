@@ -1,7 +1,14 @@
 package GDSC.FirstProject.repository;
 
+import GDSC.FirstProject.entity.Company;
 import GDSC.FirstProject.entity.Feed;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface FeedRepository extends JpaRepository<Feed, Long> {
+
+    Optional<Feed> findBycompany(Company company);
+
+    Optional<Feed> findById(Long id);
 }
