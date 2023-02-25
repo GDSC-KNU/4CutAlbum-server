@@ -1,12 +1,15 @@
 package GDSC.FirstProject.dto.reponseDto;
 
-import GDSC.FirstProject.entity.Company;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
+@AllArgsConstructor
+@ToString
 public class createFeedResponseDto {
 
     @NotEmpty
@@ -17,5 +20,8 @@ public class createFeedResponseDto {
     @NotEmpty
     private Integer peopleCount;
 
-    private Company company;
+    private String company;
+
+    public createFeedResponseDto() {
+    }
 }
