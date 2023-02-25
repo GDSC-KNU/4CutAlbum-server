@@ -34,6 +34,8 @@ public class Feed {
 
     private String s3Key;
 
+    private Integer likes;
+
     public Feed(createFeedRequestDto requestDto, String s3Key, Member member, Company company){
         this.likes = 0;
         this.peopleCount = requestDto.peopleCount;
