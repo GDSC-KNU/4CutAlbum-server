@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface FeedRepository extends JpaRepository<Feed, Long> {
 
     Optional<Feed> findBycompany(Company company);
+
+    Optional<Feed> findById(Long id);
 }
