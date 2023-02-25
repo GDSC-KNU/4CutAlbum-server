@@ -1,24 +1,29 @@
 package GDSC.FirstProject.controller;
 
+import GDSC.FirstProject.converter.FeedConverter;
+import GDSC.FirstProject.dto.reponseDto.createFeedResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.entity.*;
 import GDSC.FirstProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/feeds")
+@RestController
+@RequestMapping("/feeds")
 @RequiredArgsConstructor
-public class feedController {
+public class FeedController {
 
     public final MemberRepository memberRepository;
     public final CompanyRepository companyRepository;
     public final HashtagRepository hashtagRepository;
     public final FeedHashtagRepository feedHashtagRepository;
     public final FeedRepository feedRepository;
-
-    @PostMapping("/")
-    public Feed saveFeed(createFeedRequestDto requestDto){
+    public final FeedConverter feedConverter;
+    @PostMapping
+    public createFeedResponseDto saveFeed(@RequestBody createFeedRequestDto requestDto){
 
         Member findMember = memberRepository.findById(Long.valueOf(requestDto.uid))
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
@@ -42,6 +47,7 @@ public class feedController {
             feedHashtagRepository.save(new FeedHashtag(saveFeed, findHashtag));
         }
 
-        return saveFeed;
+        createFeedResponseDto responseDto = feedConverter.convert(requestDto);
+        return responseDto;
     }
 }
