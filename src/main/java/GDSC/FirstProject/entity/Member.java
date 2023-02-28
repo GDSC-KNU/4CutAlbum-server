@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,11 +21,19 @@ public class Member {
     @GeneratedValue
     private Long id;
 
+    private String uid;
+
     private String nickName;
 
     private String email;
 
-    public Member(String nickName, String email) {
+    private LocalDateTime CreatedTime;
+
+    @OneToMany(mappedBy = "member")
+    private List<Feed> feedList = new ArrayList<>();
+
+    public Member(String uid, String nickName, String email) {
+        this.uid = uid;
         this.nickName = nickName;
         this.email = email;
     }
