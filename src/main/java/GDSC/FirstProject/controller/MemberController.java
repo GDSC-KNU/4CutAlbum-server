@@ -15,7 +15,6 @@ public class MemberController {
 
     @GetMapping("/profile")
     public ProfileResponseDto getLoginProfile(@RequestParam String uid) {
-        System.out.println(uid);
         return memberService.loginProfile(uid);
     }
 
