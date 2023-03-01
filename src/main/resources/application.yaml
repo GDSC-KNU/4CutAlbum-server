@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    include:
+      - aws
   datasource:
     url: jdbc:mysql://54.180.148.255:3306/gdsc?&characterEncoding=UTF-8&serverTimezone=UTC
     username: lsm
@@ -17,3 +20,14 @@ spring:
 
 logging.level:
       org.hibernate.SQL: debug
+
+cloud:
+  aws:
+    s3:
+      bucket: necut-test
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instance-profile: true
