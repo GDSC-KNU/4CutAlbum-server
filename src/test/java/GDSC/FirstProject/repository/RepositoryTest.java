@@ -17,7 +17,7 @@ public class RepositoryTest {
     @Transactional
     public void memberRepositoryTest() throws Exception{
         //given
-        Member member1 = new Member("nickName1", "abc");
+        Member member1 = new Member("testUid", "nickName1", "abc");
 
         //when
         memberRepository.save(member1);
