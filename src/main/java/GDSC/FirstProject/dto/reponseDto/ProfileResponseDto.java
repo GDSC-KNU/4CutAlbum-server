@@ -18,7 +18,7 @@ public class ProfileResponseDto {
 
     public ProfileResponseDto(Member member) {
         this.nickName = member.getNickName();
-        this.email = email;
+        this.email = member.getEmail();
         for (Feed feed : member.getFeedList()) {
             this.feeds.add(new createFeedResponseDto(feed));
         }
