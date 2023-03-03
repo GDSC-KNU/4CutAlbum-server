@@ -2,10 +2,7 @@ package GDSC.FirstProject.entity;
 
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "feed")
 @Getter @Setter
+@EqualsAndHashCode
 public class Feed {
 
     @Id
@@ -36,6 +34,8 @@ public class Feed {
 
     private Integer likes;
 
+    public String comment;
+
     public Feed(createFeedRequestDto requestDto, String s3Key, Member member, Company company){
         this.likes = 0;
         this.peopleCount = requestDto.peopleCount;
@@ -43,5 +43,6 @@ public class Feed {
         this.s3Key = s3Key;
         this.member = member;
         this.company = company;
+        this.comment = requestDto.comment;
     }
 }
