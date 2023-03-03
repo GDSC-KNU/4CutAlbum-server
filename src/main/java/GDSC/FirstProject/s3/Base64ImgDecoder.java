@@ -5,9 +5,8 @@ import java.io.FileOutputStream;
 
 public class Base64ImgDecoder {
     public static boolean decode(String base64Img, String fileName) {
-        // base64 문자열의 data:image/jpeg;base64 부분 제거
-        String[] parts = base64Img.split(",");
-        byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
+        // 이미지 base64 문자열만 바로 받아와서 디코딩
+        byte[] imageBytes = Base64.getDecoder().decode(base64Img);
 
         try (FileOutputStream fos = new FileOutputStream(fileName)) {
             fos.write(imageBytes);
