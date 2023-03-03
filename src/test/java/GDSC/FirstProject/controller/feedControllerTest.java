@@ -8,6 +8,7 @@ import GDSC.FirstProject.repository.HashtagRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class feedControllerTest {
@@ -24,6 +25,7 @@ class feedControllerTest {
     HashtagRepository hashtagRepository;
 
     @Test
+    @Transactional
     public void saveFeedTest() {
         //given
         createFeedRequestDto requestDto = createFeedRequestDto.builder()
@@ -32,13 +34,13 @@ class feedControllerTest {
                 .company("인생네컷")
                 .hashtags(new String[]{"test1", "test2"})
                 .peopleCount(2)
+                .comment("testComment1")
                 .build();
 
         //when
         feedController.saveFeed(requestDto);
 
         //then
-
-
+//        Assertions.assertThat(findFeed.getId()).isEqualTo(saveFeed.getId());
     }
 }
