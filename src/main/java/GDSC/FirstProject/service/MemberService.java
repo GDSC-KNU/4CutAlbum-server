@@ -9,4 +9,6 @@ public interface MemberService {
      void signUp(SignupRequestDto requestDto);
 
      ProfileResponseDto loginProfile(String uid);
+
+     Boolean signupCheck(String uid);
 }

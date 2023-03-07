@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
     @Id
@@ -27,6 +30,7 @@ public class Member {
 
     private String email;
 
+    @CreatedDate
     private LocalDateTime CreatedTime;
 
     @OneToMany(mappedBy = "member")
