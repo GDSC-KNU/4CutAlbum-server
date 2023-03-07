@@ -27,11 +27,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ProfileResponseDto loginProfile(String uid) {
-
         Member member = memberRepository.findByUid(uid)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
 
         return new ProfileResponseDto(member);
+    }
+
+    @Override
+    public Boolean signupCheck(String uid) {
+        return duplicateMemberCheck(uid);
     }
 
     private boolean duplicateMemberCheck(String uid) {
