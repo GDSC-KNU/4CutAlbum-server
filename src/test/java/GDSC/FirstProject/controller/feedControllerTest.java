@@ -33,7 +33,7 @@ class feedControllerTest {
                 .image("image")
                 .company("인생네컷")
                 .hashtags(new String[]{"test1", "test2"})
-                .peopleCount(2)
+                .peopleCount(2L)
                 .comment("testComment1")
                 .build();
 
