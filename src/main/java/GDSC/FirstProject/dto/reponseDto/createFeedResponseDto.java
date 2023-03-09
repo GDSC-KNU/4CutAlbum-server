@@ -7,11 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -24,7 +19,7 @@ public class createFeedResponseDto {
     private String[] hashtags;
 
     @NotEmpty
-    private Integer peopleCount;
+    private Long peopleCount;
 
     private String company;
 

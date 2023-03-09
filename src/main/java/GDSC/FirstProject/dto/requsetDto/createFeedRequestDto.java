@@ -21,7 +21,7 @@ public class createFeedRequestDto {
     public String[] hashtags;
 
     @NotEmpty @Min(1)
-    public Integer peopleCount;
+    public Long peopleCount;
 
     public String company;
 
