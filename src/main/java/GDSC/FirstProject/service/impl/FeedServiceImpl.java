@@ -6,12 +6,14 @@ import GDSC.FirstProject.repository.*;
 import GDSC.FirstProject.s3.S3Uploader;
 import GDSC.FirstProject.service.FeedService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FeedServiceImpl implements FeedService {
 
     public final MemberRepository memberRepository;
@@ -27,12 +29,12 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public void saveFeed(createFeedRequestDto requestDto) {
+    public String saveFeed(createFeedRequestDto requestDto) {
         Member findMember = memberRepository.findById(Long.valueOf(requestDto.uid)).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
         String RandomS3Key = makeRandomS3Key();
 
-//        s3Uploader.upload(requestDto.image, RandomS3Key);
+        String url = s3Uploader.upload(requestDto.image, RandomS3Key);
 
         Company findCompany = companyRepository.findByvalue(requestDto.company).orElseThrow(()-> new IllegalArgumentException("회사가 존재하지 않습니다."));
 
@@ -42,6 +44,8 @@ public class FeedServiceImpl implements FeedService {
             Hashtag findHashtag = hashtagRepository.findByvalue(hashtag).orElseThrow(() -> new IllegalArgumentException("해시태그가 존재하지 않습니다."));
             feedHashtagRepository.save(new FeedHashtag(saveFeed, findHashtag));
         }
+
+        return url;
     }
 
 }

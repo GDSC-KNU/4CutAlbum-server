@@ -6,5 +6,5 @@ public interface FeedService {
 
     String makeRandomS3Key();
 
-    void saveFeed(createFeedRequestDto requestDto);
+    String saveFeed(createFeedRequestDto requestDto);
 }
