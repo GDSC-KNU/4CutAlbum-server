@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class feedListDbDto {
+public class originalFeedListDbDto {
 
     public Long feed_id;
     public String image;
@@ -14,7 +14,7 @@ public class feedListDbDto {
     public String company_name;
     public String hashtag;
 
-    public feedListDbDto(Long feed_id, String image, Long people_count, String company_name, String hashtag) {
+    public originalFeedListDbDto(Long feed_id, String image, Long people_count, String company_name, String hashtag) {
         this.feed_id = feed_id;
         this.image = image;
         this.people_count = people_count;
