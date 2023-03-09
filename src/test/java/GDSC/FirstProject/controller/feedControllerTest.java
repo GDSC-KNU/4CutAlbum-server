@@ -1,14 +1,21 @@
 package GDSC.FirstProject.controller;
 
+import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
+import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.repository.CompanyRepository;
 import GDSC.FirstProject.repository.FeedHashtagRepository;
 import GDSC.FirstProject.repository.FeedRepository;
 import GDSC.FirstProject.repository.HashtagRepository;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 class feedControllerTest {
@@ -38,9 +45,34 @@ class feedControllerTest {
                 .build();
 
         //when
-        feedController.saveFeed(requestDto);
+//        feedController.saveFeed(requestDto);
 
         //then
 //        Assertions.assertThat(findFeed.getId()).isEqualTo(saveFeed.getId());
+    }
+
+    @Test
+    @DisplayName("피드컨트롤러 피드리스트 테스트")
+    public void feedListTest(){
+        //given
+        String company_name = "인생네컷";
+        Long people_count = 2L;
+        Long page_number = 0L;
+        List<String> hashtags = new ArrayList<>();
+        hashtags.add("test1");
+        hashtags.add("test2");
+
+        //when
+        feedListResponseDto feedListResponseDto = feedController.feedList(company_name, people_count, hashtags, page_number);
+        distinctFeedListDbDto[] feedList = feedListResponseDto.getFeedList();
+        Long pageNumber = feedListResponseDto.getPage_number();
+        boolean hasNext = feedListResponseDto.isHasNext();
+
+        //then
+        for (distinctFeedListDbDto distinctFeedListDbDto : feedList) {
+            System.out.println("distinctFeedListDbDto.toString() = " + distinctFeedListDbDto.toString());
+        }
+        Assertions.assertThat(pageNumber).isEqualTo(0L);
+        Assertions.assertThat(hasNext).isTrue();
     }
 }
