@@ -22,7 +22,7 @@ public class Feed {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Integer peopleCount;
+    private Long peopleCount;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -32,12 +32,12 @@ public class Feed {
 
     private String s3Key;
 
-    private Integer likes;
+    private Long likes;
 
     public String comment;
 
     public Feed(createFeedRequestDto requestDto, String s3Key, Member member, Company company){
-        this.likes = 0;
+        this.likes = 0L;
         this.peopleCount = requestDto.peopleCount;
         this.createdDate = LocalDateTime.now();
         this.s3Key = s3Key;
