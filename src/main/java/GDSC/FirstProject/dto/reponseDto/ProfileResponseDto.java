@@ -1,6 +1,8 @@
 package GDSC.FirstProject.dto.reponseDto;
 
+import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
 import GDSC.FirstProject.entity.Feed;
+import GDSC.FirstProject.entity.FeedHashtag;
 import GDSC.FirstProject.entity.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +16,13 @@ public class ProfileResponseDto {
 
     private String nickName;
     private String email;
-    private List<createFeedResponseDto> feeds = new ArrayList<>();
+    private List<ProfileFeedResponseDto> feeds = new ArrayList<>();
 
     public ProfileResponseDto(Member member) {
         this.nickName = member.getNickName();
         this.email = member.getEmail();
         for (Feed feed : member.getFeedList()) {
-            this.feeds.add(new createFeedResponseDto(feed));
+            this.feeds.add(new ProfileFeedResponseDto(feed));
         }
     }
 }
