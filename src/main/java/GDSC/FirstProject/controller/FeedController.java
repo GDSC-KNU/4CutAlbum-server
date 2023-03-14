@@ -4,8 +4,8 @@ import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.service.FeedService;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,16 +28,16 @@ public class FeedController {
     }
     @GetMapping("/list")
     public feedListResponseDto feedList(
-            @RequestParam("company") String company,
-            @RequestParam("people-count")Long people_count,
-            @RequestParam("hashtags") List<String> hashtags,
-            @RequestParam("page-number") Long page_number) {
+            @RequestParam("company") @NotNull String company,
+            @RequestParam("people-count") @NotNull Long people_count,
+            @RequestParam("hashtags") @NotNull List<String> hashtags,
+            @RequestParam("page-number") @NotNull Long page_number) {
 
         return feedService.findFeedList(company, people_count, hashtags, page_number);
     }
 
     @GetMapping("/info")
-    public feedInfoResponseDto feedInfo(@Param("id") Long id) {
+    public feedInfoResponseDto feedInfo(@RequestParam("id") @NotNull Long id) {
         return feedService.findFeedInfo(id);
     }
 }
