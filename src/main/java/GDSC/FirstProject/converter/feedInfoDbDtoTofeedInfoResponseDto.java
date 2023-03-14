@@ -15,6 +15,8 @@ import java.util.Set;
 @Slf4j
 public class feedInfoDbDtoTofeedInfoResponseDto implements Converter<List<feedInfoDbDto>, feedInfoResponseDto> {
 
+    private String s3Url = "https://necut-test.s3.ap-northeast-2.amazonaws.com/";
+
     @Override
     public feedInfoResponseDto convert(List<feedInfoDbDto> sourceList) {
 
@@ -31,7 +33,7 @@ public class feedInfoDbDtoTofeedInfoResponseDto implements Converter<List<feedIn
         responseDto = feedInfoResponseDto.builder()
                 .id(source[0].getId())
                 .nick_name(source[0].getNick_name())
-                .s3_key(source[0].getS3_key())
+                .s3_key(s3Url + source[0].getS3_key())
                 .company_name(source[0].getCompany_name())
                 .likes(source[0].getLikes())
                 .comment(source[0].getComment())
