@@ -26,12 +26,12 @@ public class FeedController {
         response.put("url", url);
         return response;
     }
-    @GetMapping("/list/{company}/{people-count}/{hashtags}/{page-number}")
+    @GetMapping("/list")
     public feedListResponseDto feedList(
-            @PathVariable("company") String company,
-            @PathVariable("people-count")Long people_count,
-            @PathVariable("hashtags") List<String> hashtags,
-            @PathVariable("page-number") Long page_number) {
+            @RequestParam("company") String company,
+            @RequestParam("people-count")Long people_count,
+            @RequestParam("hashtags") List<String> hashtags,
+            @RequestParam("page-number") Long page_number) {
 
         return feedService.findFeedList(company, people_count, hashtags, page_number);
     }
