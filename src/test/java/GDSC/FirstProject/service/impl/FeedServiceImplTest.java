@@ -1,6 +1,7 @@
 package GDSC.FirstProject.service.impl;
 
 import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
+import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.repository.FeedRepository;
 import GDSC.FirstProject.service.FeedService;
@@ -48,5 +49,17 @@ class FeedServiceImplTest {
         }
         assertThat(pageNumber).isEqualTo(0L);
         assertThat(hasNext).isTrue();
+    }
+
+    @Test
+    public void 피드_상세정보_조회_테스트() throws Exception{
+        //given
+        Long id = 1702L;
+
+        //when
+        feedInfoResponseDto feedInfo = feedService.findFeedInfo(id);
+
+        //then
+        System.out.println(feedInfo.toString());
     }
 }
