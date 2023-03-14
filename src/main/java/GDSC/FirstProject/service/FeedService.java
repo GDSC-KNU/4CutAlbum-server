@@ -1,5 +1,6 @@
 package GDSC.FirstProject.service;
 
+import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 
@@ -12,4 +13,6 @@ public interface FeedService {
     String saveFeed(createFeedRequestDto requestDto);
 
     feedListResponseDto findFeedList(String company_name, Long people_count, List<String> hashtags, Long page_number);
+
+    feedInfoResponseDto findFeedInfo(Long id);
 }

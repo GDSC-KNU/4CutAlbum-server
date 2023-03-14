@@ -1,9 +1,11 @@
 package GDSC.FirstProject.controller;
 
+import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.service.FeedService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,5 +34,10 @@ public class FeedController {
             @PathVariable("page-number") Long page_number) {
 
         return feedService.findFeedList(company, people_count, hashtags, page_number);
+    }
+
+    @GetMapping("/info")
+    public feedInfoResponseDto feedInfo(@Param("id") Long id) {
+        return feedService.findFeedInfo(id);
     }
 }

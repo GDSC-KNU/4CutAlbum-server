@@ -1,7 +1,9 @@
 package GDSC.FirstProject.service.impl;
 
 import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
+import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
 import GDSC.FirstProject.dto.dbDto.originalFeedListDbDto;
+import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.entity.*;
@@ -75,6 +77,14 @@ public class FeedServiceImpl implements FeedService {
                 .page_number(number)
                 .hasNext(hasNext)
                 .build();
+    }
+
+    @Override
+    public feedInfoResponseDto findFeedInfo(Long id) {
+        List<feedInfoDbDto> feedInfoDbDtos = feedRepository.findFeedInfo(id)
+                .orElseThrow(() -> new IllegalArgumentException("피드가 존재하지 않습니다."));
+
+        return conversionService.convert(feedInfoDbDtos, feedInfoResponseDto.class);
     }
 
 

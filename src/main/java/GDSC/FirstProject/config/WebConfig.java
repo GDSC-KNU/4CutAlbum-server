@@ -1,5 +1,6 @@
 package GDSC.FirstProject.config;
 
+import GDSC.FirstProject.converter.feedInfoDbDtoTofeedInfoResponseDto;
 import GDSC.FirstProject.converter.originalFeedListDbDtoToDistinctFeedListDbDto;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -11,6 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new originalFeedListDbDtoToDistinctFeedListDbDto());
+        registry.addConverter(new feedInfoDbDtoTofeedInfoResponseDto());
     }
 
 }

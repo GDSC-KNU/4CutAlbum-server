@@ -1,5 +1,6 @@
 package GDSC.FirstProject.repository;
 
+import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
 import GDSC.FirstProject.dto.dbDto.originalFeedListDbDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +42,20 @@ public class FeedRepositoryTest {
         for (originalFeedListDbDto dto : dtos) {
             System.out.println(dto.toString());
         }
+    }
 
+    @Test
+    public void 피드_상세정보_조회() throws Exception {
+        //given
+        Long feed_id = 1702L;
 
+        //when
+        List<feedInfoDbDto> feedInfoDbDtos = feedRepository.findFeedInfo(feed_id)
+                .orElseThrow(() -> new Exception("피드가 존재하지 않습니다."));
+
+        //then
+        for (feedInfoDbDto feedInfoDbDto : feedInfoDbDtos) {
+            System.out.println(feedInfoDbDto.toString());
+        }
     }
 }
