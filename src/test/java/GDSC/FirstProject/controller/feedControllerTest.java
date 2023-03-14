@@ -1,6 +1,7 @@
 package GDSC.FirstProject.controller;
 
 import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
+import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.repository.CompanyRepository;
@@ -74,5 +75,17 @@ class feedControllerTest {
         }
         Assertions.assertThat(pageNumber).isEqualTo(0L);
         Assertions.assertThat(hasNext).isTrue();
+    }
+
+    @Test
+    public void 피드_상세정보_컨트롤러_테스트() throws Exception{
+        //given
+        Long id = 1702L;
+
+        //when
+        feedInfoResponseDto feedInfoResponseDto = feedController.feedInfo(id);
+
+        //then
+        System.out.println("feedInfoResponseDto.toString() = " + feedInfoResponseDto.toString());
     }
 }
