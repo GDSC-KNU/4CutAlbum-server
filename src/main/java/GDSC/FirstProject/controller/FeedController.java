@@ -36,7 +36,7 @@ public class FeedController {
         return feedService.findFeedList(company, people_count, hashtags, page_number);
     }
 
-    @GetMapping("/info")
+    @GetMapping("/")
     public feedInfoResponseDto feedInfo(@RequestParam("id") @NotNull Long id) {
         return feedService.findFeedInfo(id);
     }

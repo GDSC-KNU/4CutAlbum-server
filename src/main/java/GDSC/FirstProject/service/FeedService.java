@@ -10,6 +10,8 @@ public interface FeedService {
 
     String makeRandomS3Key();
 
+    String concatRandomS3keyAndExtension(String FileNameExtension);
+
     String saveFeed(createFeedRequestDto requestDto);
 
     feedListResponseDto findFeedList(String company_name, Long people_count, List<String> hashtags, Long page_number);

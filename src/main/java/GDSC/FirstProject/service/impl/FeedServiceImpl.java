@@ -40,10 +40,18 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    public String concatRandomS3keyAndExtension(String fileName) {
+        int extensionIndex = fileName.lastIndexOf('.');
+        return fileName.substring(extensionIndex + 1);
+    }
+
+    @Override
     public String saveFeed(createFeedRequestDto requestDto) {
         Member findMember = memberRepository.findById(Long.valueOf(requestDto.uid)).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
         String RandomS3Key = makeRandomS3Key();
+
+        RandomS3Key = RandomS3Key+ "." +concatRandomS3keyAndExtension(requestDto.image_name);
 
         String url = s3Uploader.upload(requestDto.image, RandomS3Key);
 
