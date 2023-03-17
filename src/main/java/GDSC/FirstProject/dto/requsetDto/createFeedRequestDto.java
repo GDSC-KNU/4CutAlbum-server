@@ -18,6 +18,9 @@ public class createFeedRequestDto {
     @NotEmpty
     public String image;
 
+    @NotEmpty
+    public String image_name;
+
     public String[] hashtags;
 
     @NotEmpty @Min(1)
@@ -27,6 +30,7 @@ public class createFeedRequestDto {
 
     @NotNull
     public String comment;
+
 
     public createFeedRequestDto() {
     }
