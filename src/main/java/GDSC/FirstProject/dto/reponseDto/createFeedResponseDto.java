@@ -1,6 +1,5 @@
 package GDSC.FirstProject.dto.reponseDto;
 
-import GDSC.FirstProject.entity.Feed;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,11 +25,4 @@ public class createFeedResponseDto {
     public createFeedResponseDto() {
     }
 
-    public createFeedResponseDto(Feed feed) {
-//        this.image =
-//        this.hashtags =
-        this.peopleCount = feed.getPeopleCount();
-        this.company = feed.getCompany().getValue();
-
-    }
 }

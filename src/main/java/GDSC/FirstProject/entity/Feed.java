@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,6 +28,9 @@ public class Feed {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "feed")
+    private List<FeedHashtag> feedHashtagList;
 
     private LocalDateTime createdDate;
 
