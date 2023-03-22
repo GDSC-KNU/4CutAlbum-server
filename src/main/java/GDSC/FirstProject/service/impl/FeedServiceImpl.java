@@ -68,11 +68,12 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public feedListResponseDto findFeedList(String company_name, Long people_count, List<String> hashtagsListVer, Long page_number) {
-        String[] hashtags = hashtagsListVer.toArray(new String[hashtagsListVer.size()]);
+    public feedListResponseDto findFeedList_Querydsl(String company_name, Long people_count, List<String> hashtagsListVer, Long page_number) {
+        String[] hashtags = hashtagsListVer != null  ? hashtagsListVer.toArray(new String[hashtagsListVer.size()]) : null;
         PageRequest pageRequest = PageRequest.of(page_number.intValue(), 10, Sort.by(Sort.Direction.DESC, "createdDate"));
 
-        Slice<originalFeedListDbDto> slice = feedRepository.findFeedList(company_name, people_count, hashtags, pageRequest);
+//        Slice<originalFeedListDbDto> slice = feedRepository.findFeedList(company_name, people_count, hashtags, pageRequest);
+        Slice<originalFeedListDbDto> slice = feedRepository.findFeedList_Querydsl(company_name, people_count, hashtags, pageRequest);
         boolean hasNext = slice.hasNext();
         Long number = (long) slice.getNumber();
 
