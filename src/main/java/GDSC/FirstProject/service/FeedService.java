@@ -18,4 +18,6 @@ public interface FeedService {
 
 
     feedInfoResponseDto findFeedInfo(Long id);
+
+    void deleteFeedById(Long id);
 }

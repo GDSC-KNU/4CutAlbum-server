@@ -96,5 +96,10 @@ public class FeedServiceImpl implements FeedService {
         return conversionService.convert(feedInfoDbDtos, feedInfoResponseDto.class);
     }
 
+    @Override
+    public void deleteFeedById(Long id) {
+        feedRepository.deleteById(id);
+    }
+
 
 }
