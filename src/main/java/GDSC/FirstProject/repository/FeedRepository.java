@@ -4,8 +4,10 @@ import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
 import GDSC.FirstProject.entity.Company;
 import GDSC.FirstProject.entity.Feed;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +27,8 @@ public interface FeedRepository extends JpaRepository<Feed, Long>, FeedRepositor
             " where f.id = :id"
     )
     Optional<List<feedInfoDbDto>> findFeedInfo(@Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    void deleteFeedById(Long id);
 }
