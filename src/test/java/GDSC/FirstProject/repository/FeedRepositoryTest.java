@@ -61,5 +61,4 @@ public class FeedRepositoryTest {
             System.out.println("dto = " + dto);
         }
     }
-
 }

@@ -29,7 +29,7 @@ public class Feed {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "feed")
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     private List<FeedHashtag> feedHashtagList;
 
     private LocalDateTime createdDate;
