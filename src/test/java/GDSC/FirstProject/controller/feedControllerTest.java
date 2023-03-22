@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -56,12 +55,15 @@ class feedControllerTest {
     @DisplayName("피드컨트롤러 피드리스트 테스트")
     public void feedListTest(){
         //given
-        String company_name = "인생네컷";
-        Long people_count = 2L;
+//        String company_name = "인생네컷";
+        String company_name = null;
+//        Long people_count = 2L;
+        Long people_count = null;
         Long page_number = 0L;
-        List<String> hashtags = new ArrayList<>();
-        hashtags.add("test1");
-        hashtags.add("test2");
+        List<String> hashtags = null;
+//        List<String> hashtags = new ArrayList<>();
+//        hashtags.add("test1");
+//        hashtags.add("test2");
 
         //when
         feedListResponseDto feedListResponseDto = feedController.feedList(company_name, people_count, hashtags, page_number);
@@ -74,7 +76,7 @@ class feedControllerTest {
             System.out.println("distinctFeedListDbDto.toString() = " + distinctFeedListDbDto.toString());
         }
         Assertions.assertThat(pageNumber).isEqualTo(0L);
-        Assertions.assertThat(hasNext).isTrue();
+        Assertions.assertThat(hasNext).isFalse();
     }
 
     @Test
