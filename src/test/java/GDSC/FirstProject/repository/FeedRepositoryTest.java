@@ -38,6 +38,7 @@ public class FeedRepositoryTest {
     }
 
     @Test
+<<<<<<< Updated upstream
     @DisplayName("Querydsl 피드리스트 조회 테스트")
     public void findFeedList_QuerydslTest() throws Exception {
         //given
@@ -62,4 +63,15 @@ public class FeedRepositoryTest {
         }
     }
 
+=======
+    public void 피드_삭제_api() throws Exception {
+        //given
+        Long id = 1802L;
+
+        //when
+        feedRepository.deleteFeedById(id);
+
+        //then
+    }
+>>>>>>> Stashed changes
 }
