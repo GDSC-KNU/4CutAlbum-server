@@ -43,4 +43,10 @@ public class FeedController {
     public feedInfoResponseDto feedInfo(@RequestParam("id") @NotNull Long id) {
         return feedService.findFeedInfo(id);
     }
+
+    @DeleteMapping("/")
+    public void deleteFeed(@RequestParam("id") @NotNull Long id) {
+        feedService.deleteFeedById(id);
+
+    }
 }
