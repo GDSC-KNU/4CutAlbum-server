@@ -8,6 +8,7 @@ import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.entity.*;
 import GDSC.FirstProject.repository.*;
+import GDSC.FirstProject.s3.S3Deleter;
 import GDSC.FirstProject.s3.S3Uploader;
 import GDSC.FirstProject.service.FeedService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class FeedServiceImpl implements FeedService {
     public final FeedHashtagRepository feedHashtagRepository;
     public final FeedRepository feedRepository;
     public final S3Uploader s3Uploader;
+    public final S3Deleter s3Deleter;
     public final ConversionService conversionService;
 
     @Override
@@ -98,7 +100,9 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public void deleteFeedById(Long id) {
+        List<feedInfoDbDto> findFeed = feedRepository.findFeedInfo(id).orElseThrow(() -> new IllegalArgumentException("피드가 존재하지 않습니다."));
         feedRepository.deleteById(id);
+        s3Deleter.delete(findFeed.get(0).getS3_key());
     }
 
 
