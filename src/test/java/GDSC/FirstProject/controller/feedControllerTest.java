@@ -58,7 +58,7 @@ class feedControllerTest {
 //        String company_name = "인생네컷";
         String company_name = null;
 //        Long people_count = 2L;
-        Long people_count = null;
+        String people_count = "";
         Long page_number = 0L;
         List<String> hashtags = null;
 //        List<String> hashtags = new ArrayList<>();
