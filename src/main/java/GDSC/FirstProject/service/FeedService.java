@@ -20,4 +20,6 @@ public interface FeedService {
     feedInfoResponseDto findFeedInfo(Long id);
 
     void deleteFeedById(Long id);
+
+    Long translatePeopleCount(String people_count);
 }

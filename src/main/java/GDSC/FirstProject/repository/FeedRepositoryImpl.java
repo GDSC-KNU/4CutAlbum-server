@@ -6,6 +6,7 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -19,6 +20,7 @@ import static org.springframework.util.StringUtils.hasText;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class FeedRepositoryImpl implements FeedRepositoryCustom{
 
     private final JPAQueryFactory queryFactory;
@@ -44,7 +46,7 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom{
                 .limit(pageable.getPageSize())
                 .orderBy(feed.createdDate.desc())
                 .fetchResults();
-
+        log.info("company_name: {}, people_count: {}, hashtags: {}", company_name, people_count, hashtags);
         return new SliceImpl<>(results.getResults(), pageable, results.getTotal() > pageable.getOffset() + pageable.getPageSize());
     }
 
@@ -57,7 +59,7 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom{
     }
 
     private BooleanExpression hashtagIn(String[] hashtags) {
-        if (hashtags == null || hashtags.length == 0) return null;
+        if (hashtags.length == 0) return null;
         return hashtag.value.in(hashtags);
     }
 }

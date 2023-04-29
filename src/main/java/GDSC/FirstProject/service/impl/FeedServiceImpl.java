@@ -105,5 +105,10 @@ public class FeedServiceImpl implements FeedService {
         s3Deleter.delete(findFeed.get(0).getS3_key());
     }
 
+    @Override
+    public Long translatePeopleCount(String people_count) {
+        return people_count.equals("") ? null : Long.valueOf(people_count);
+    }
+
 
 }
