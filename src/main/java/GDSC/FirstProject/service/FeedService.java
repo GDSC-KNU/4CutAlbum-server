@@ -20,6 +20,6 @@ public interface FeedService {
 
     Long translatePeopleCount(String people_count);
 
-    feedListResponseDto makeDistinctFeedList(String company_name, Long people_count, List<String> hashtags, Long page_number);
+    feedListResponseDto makeFeedListResponseDto(String company_name, Long people_count, List<String> hashtags, Long page_number);
 
 }
