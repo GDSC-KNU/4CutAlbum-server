@@ -1,6 +1,9 @@
 package GDSC.FirstProject.service.impl;
 
-import GDSC.FirstProject.dto.dbDto.*;
+import GDSC.FirstProject.dto.dbDto.PartOfFeedListDbDto;
+import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
+import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
+import GDSC.FirstProject.dto.dbDto.feedListDbDto;
 import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
@@ -11,6 +14,7 @@ import GDSC.FirstProject.s3.S3Uploader;
 import GDSC.FirstProject.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -32,6 +36,9 @@ public class FeedServiceImpl implements FeedService {
     public final S3Uploader s3Uploader;
     public final S3Deleter s3Deleter;
     public final ConversionService conversionService;
+
+    @Value("${cloud.aws.s3.url}")
+    public String s3Url;
 
     @Override
     public String makeRandomS3Key() {
@@ -115,7 +122,7 @@ public class FeedServiceImpl implements FeedService {
         for (int i = 0; i < feedListDbDtos.size(); i++) {
             temp = new distinctFeedListDbDto(
                     feedListDbDtos.get(i).feed_id,
-                    feedListDbDtos.get(i).image,
+                    s3Url + feedListDbDtos.get(i).image,
                     feedListDbDtos.get(i).people_count,
                     feedListDbDtos.get(i).company_name,
                     map.get(feedListDbDtos.get(i).getFeed_id())
