@@ -11,6 +11,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static GDSC.FirstProject.entity.QCompany.company;
 import static GDSC.FirstProject.entity.QFeed.feed;
 import static GDSC.FirstProject.entity.QFeedHashtag.feedHashtag;
@@ -25,7 +27,7 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<feedListDbDto> findFeedList_QuerydslFixed(String company_name, Long people_count, String[] hashtags, Pageable pageable) {
+    public Slice<feedListDbDto> findFeedList_Querydsl(String company_name, Long people_count, String[] hashtags, Pageable pageable) {
         QueryResults<feedListDbDto> results = queryFactory
                 .select(
                         new QfeedListDbDto(
@@ -50,7 +52,7 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
     }
 
     @Override
-    public Slice<PartOfFeedListDbDto> findPartOfFeedList_Querydsl(String company_name, Long people_count, String[] hashtags, Pageable pageable) {
+    public List<PartOfFeedListDbDto> findPartOfFeedList_Querydsl(String company_name, Long people_count, String[] hashtags) {
         QueryResults<PartOfFeedListDbDto> results = queryFactory
                 .select(
                         new QPartOfFeedListDbDto(
@@ -65,12 +67,11 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
                         company_nameEq(company_name),
                         people_countEq(people_count),
                         hashtagIn(hashtags))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
                 .orderBy(feed.createdDate.desc())
                 .fetchResults();
 
-        return new SliceImpl<>(results.getResults(), pageable, results.getTotal() > pageable.getOffset() + pageable.getPageSize());
+        return results.getResults();
+
     }
 
 

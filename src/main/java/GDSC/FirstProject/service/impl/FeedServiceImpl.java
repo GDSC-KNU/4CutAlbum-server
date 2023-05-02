@@ -84,24 +84,23 @@ public class FeedServiceImpl implements FeedService {
     public Long translatePeopleCount(String people_count) {
         return people_count.equals("") ? null : Long.valueOf(people_count);
     }
-
     @Override
-    public feedListResponseDto makeDistinctFeedList(String company_name, Long people_count, List<String> hashtags, Long page_number) {
+    public feedListResponseDto makeFeedListResponseDto(String company_name, Long people_count, List<String> hashtags, Long page_number) {
         PageRequest pageRequest;
         String[] hashtagArray = hashtags.toArray(new String[0]);
 
         pageRequest = PageRequest.of( page_number.intValue(), 5, Sort.by(Sort.Direction.DESC, "createdDate"));
-        Slice<feedListDbDto> feedListQuerydslFixed = feedRepository.findFeedList_QuerydslFixed(company_name, people_count, hashtagArray, pageRequest);
+        Slice<feedListDbDto> feedListQuerydslFixed = feedRepository.findFeedList_Querydsl(company_name, people_count, hashtagArray, pageRequest);
         pageRequest = PageRequest.of( page_number.intValue(), 50, Sort.by(Sort.Direction.DESC, "createdDate"));
-        Slice<PartOfFeedListDbDto> partOfFeedListQuerydsl = feedRepository.findPartOfFeedList_Querydsl(company_name, people_count, hashtagArray, pageRequest);
+
+        List<PartOfFeedListDbDto> partOfFeedListQuerydslTest = feedRepository.findPartOfFeedList_Querydsl(company_name, people_count, hashtagArray);
 
         List<feedListDbDto> feedListDbDtos = feedListQuerydslFixed.getContent();
-        List<PartOfFeedListDbDto> partOfFeedListDbDtos = partOfFeedListQuerydsl.getContent();
 
         distinctFeedListDbDto[] result = new distinctFeedListDbDto[feedListDbDtos.size()];
         distinctFeedListDbDto temp;
         Map<Long, Set<String>> map = new HashMap<>();
-        for (PartOfFeedListDbDto dto : partOfFeedListDbDtos) {
+        for (PartOfFeedListDbDto dto : partOfFeedListQuerydslTest) {
             Long feedId = dto.getFeed_id();
             String hashtag = dto.getHashtag();
             if (map.containsKey(feedId)) {
@@ -129,5 +128,6 @@ public class FeedServiceImpl implements FeedService {
                 .page_number(page_number)
                 .hasNext(feedListQuerydslFixed.hasNext())
                 .build();
+
     }
 }

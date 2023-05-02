@@ -6,19 +6,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface FeedRepositoryCustom {
 
-    Slice<feedListDbDto> findFeedList_QuerydslFixed(
+    Slice<feedListDbDto> findFeedList_Querydsl(
             @Param("company_name") String company_name,
             @Param("people_count") Long people_count,
             @Param("hashtags") String[] hashtags,
             Pageable pageable
     );
 
-    Slice<PartOfFeedListDbDto> findPartOfFeedList_Querydsl(
+    List<PartOfFeedListDbDto> findPartOfFeedList_Querydsl(
             @Param("company_name") String company_name,
             @Param("people_count") Long people_count,
-            @Param("hashtags") String[] hashtags,
-            Pageable pageable
+            @Param("hashtags") String[] hashtags
     );
 }

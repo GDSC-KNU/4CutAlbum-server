@@ -37,7 +37,7 @@ class FeedServiceImplTest {
         Long page_number = 0L;
 
         //when
-        feedListResponseDto feedList = feedService.makeDistinctFeedList(company_name, people_count, hashtags, page_number);
+        feedListResponseDto feedList = feedService.makeFeedListResponseDto(company_name, people_count, hashtags, page_number);
         distinctFeedListDbDto[] list = feedList.getFeedList();
 
         //then
@@ -72,7 +72,7 @@ class FeedServiceImplTest {
     }
 
     @Test
-    public void makeDistinctFeedListTest() throws Exception {
+    public void makeFeedListResponseDtoTest() throws Exception {
         //given
         String company_name = "";
         Long people_count = 0L;
@@ -83,7 +83,7 @@ class FeedServiceImplTest {
         //when
 
         //then
-        feedListResponseDto result = feedService.makeDistinctFeedList(company_name, people_count, hashtags, 0L);
+        feedListResponseDto result = feedService.makeFeedListResponseDto(company_name, people_count, hashtags, 0L);
         distinctFeedListDbDto[] feedList = result.getFeedList();
         for (distinctFeedListDbDto distinctFeedListDbDto : feedList) {
             System.out.println(distinctFeedListDbDto.toString());
