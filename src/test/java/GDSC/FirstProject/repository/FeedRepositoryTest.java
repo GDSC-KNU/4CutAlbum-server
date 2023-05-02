@@ -46,7 +46,7 @@ public class FeedRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
 
         //when
-        Slice<feedListDbDto> slice = feedRepository.findFeedList_QuerydslFixed(company_name, people_count, hashtags, pageRequest);
+        Slice<feedListDbDto> slice = feedRepository.findFeedList_Querydsl(company_name, people_count, hashtags, pageRequest);
         List<feedListDbDto> content = slice.getContent();
         boolean hasNext = slice.hasNext();
 
@@ -63,15 +63,12 @@ public class FeedRepositoryTest {
         String company_name = "인생네컷";
         Long people_count = 0L;
         String[] hashtags = new String[]{};
-        PageRequest pageRequest = PageRequest.of(0, 50, Sort.by(Sort.Direction.DESC, "createdDate"));
 
         //when
-        Slice<PartOfFeedListDbDto> slice = feedRepository.findPartOfFeedList_Querydsl(company_name, people_count, hashtags, pageRequest);
-        List<PartOfFeedListDbDto> content = slice.getContent();
-        boolean b = slice.hasNext();
+        List<PartOfFeedListDbDto> result = feedRepository.findPartOfFeedList_Querydsl(company_name, people_count, hashtags);
 
         //then
-        for (PartOfFeedListDbDto partOfFeedListDbDto : content) {
+        for (PartOfFeedListDbDto partOfFeedListDbDto : result) {
             System.out.println("partOfFeedListDbDto = " + partOfFeedListDbDto);
         }
 
