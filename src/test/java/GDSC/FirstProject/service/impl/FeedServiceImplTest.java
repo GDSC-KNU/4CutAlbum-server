@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.convert.ConversionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -30,28 +31,19 @@ class FeedServiceImplTest {
     @Test
     public void ServiceTest() throws Exception {
         //given
-//        String company_name = "인생네컷";
-        String company_name = null;
-//        Long people_count = 2L;
-        Long people_count = null;
-        List<String> hashtags = null;
-//        List<String> hashtags = new ArrayList<>();
-//        hashtags.add("test1");
-//        hashtags.add("test2");
+        String company_name = "";
+        Long people_count = 0L;
+        List<String> hashtags = new ArrayList<>();
         Long page_number = 0L;
 
         //when
-        feedListResponseDto feedList = feedService.findFeedList_Querydsl(company_name, people_count, hashtags, page_number);
+        feedListResponseDto feedList = feedService.makeDistinctFeedList(company_name, people_count, hashtags, page_number);
         distinctFeedListDbDto[] list = feedList.getFeedList();
-        Long pageNumber = feedList.getPage_number();
-        boolean hasNext = feedList.isHasNext();
 
         //then
         for (distinctFeedListDbDto distinctFeedListDbDto : list) {
             System.out.println(distinctFeedListDbDto.toString());
         }
-//        assertThat(pageNumber).isEqualTo(0L);
-//        assertThat(hasNext).isTrue();
     }
 
     @Test
@@ -77,5 +69,24 @@ class FeedServiceImplTest {
 
         //then
         Assertions.assertThat(feedInfoDbDtos.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void makeDistinctFeedListTest() throws Exception {
+        //given
+        String company_name = "";
+        Long people_count = 0L;
+        List<String> hashtags = new ArrayList<String>();
+        hashtags.add("test1");
+        hashtags.add("test2");
+
+        //when
+
+        //then
+        feedListResponseDto result = feedService.makeDistinctFeedList(company_name, people_count, hashtags, 0L);
+        distinctFeedListDbDto[] feedList = result.getFeedList();
+        for (distinctFeedListDbDto distinctFeedListDbDto : feedList) {
+            System.out.println(distinctFeedListDbDto.toString());
+        }
     }
 }

@@ -1,9 +1,8 @@
 package GDSC.FirstProject.repository;
 
+import GDSC.FirstProject.dto.dbDto.PartOfFeedListDbDto;
 import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
-import GDSC.FirstProject.dto.dbDto.originalFeedListDbDto;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
+import GDSC.FirstProject.dto.dbDto.feedListDbDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +11,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class FeedRepositoryTest {
@@ -36,29 +37,43 @@ public class FeedRepositoryTest {
             System.out.println(feedInfoDbDto.toString());
         }
     }
-
     @Test
-    @DisplayName("Querydsl 피드리스트 조회 테스트")
-    public void findFeedList_QuerydslTest() throws Exception {
+    public void findFeedList_QuerydslFixedTest() throws Exception{
         //given
         String company_name = "인생네컷";
-        Long people_count = 2L;
-        String[] hashtags = new String[]{"test1", "test2"};
-//        String[] hashtags = new String[]{"test1"};
-//        String[] hashtags = null;
+        Long people_count = 0L;
+        String[] hashtags = new String[]{};
         PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
 
         //when
-        Slice<originalFeedListDbDto> slice = feedRepositoryImpl.findFeedList_Querydsl(company_name, people_count, hashtags, pageRequest);
-        List<originalFeedListDbDto> dtos = slice.getContent();
+        Slice<feedListDbDto> slice = feedRepository.findFeedList_QuerydslFixed(company_name, people_count, hashtags, pageRequest);
+        List<feedListDbDto> content = slice.getContent();
         boolean hasNext = slice.hasNext();
 
         //then
-//        Assertions.assertThat(dtos.size()).isEqualTo(3);
-        Assertions.assertThat(hasNext).isFalse();
-
-        for (originalFeedListDbDto dto : dtos) {
-            System.out.println("dto = " + dto);
+        assertThat(hasNext).isFalse();
+        for (feedListDbDto feedListDbDto : content) {
+            System.out.println("feedListDbDto = " + feedListDbDto);
         }
+    }
+
+    @Test
+    public void findPartOfFeedList_QuerydslTest() throws Exception{
+        //given
+        String company_name = "인생네컷";
+        Long people_count = 0L;
+        String[] hashtags = new String[]{};
+        PageRequest pageRequest = PageRequest.of(0, 50, Sort.by(Sort.Direction.DESC, "createdDate"));
+
+        //when
+        Slice<PartOfFeedListDbDto> slice = feedRepository.findPartOfFeedList_Querydsl(company_name, people_count, hashtags, pageRequest);
+        List<PartOfFeedListDbDto> content = slice.getContent();
+        boolean b = slice.hasNext();
+
+        //then
+        for (PartOfFeedListDbDto partOfFeedListDbDto : content) {
+            System.out.println("partOfFeedListDbDto = " + partOfFeedListDbDto);
+        }
+
     }
 }
