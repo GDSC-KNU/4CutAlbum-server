@@ -36,9 +36,8 @@ public class FeedController {
             @RequestParam(name = "people-count") String people_count,
             @RequestParam(name = "hashtags") List<String> hashtags,
             @RequestParam("page-number") @NotNull Long page_number) {
-        log.info("company: {}, people_count: {}, hashtags: {}, page_number: {}", company, people_count, hashtags, page_number);
 
-        return feedService.findFeedList_Querydsl(company, feedService.translatePeopleCount(people_count), hashtags, page_number);
+        return feedService.makeDistinctFeedList(company, feedService.translatePeopleCount(people_count), hashtags, page_number);
     }
 
     @GetMapping("/")
