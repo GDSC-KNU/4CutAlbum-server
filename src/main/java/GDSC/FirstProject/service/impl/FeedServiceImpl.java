@@ -1,8 +1,6 @@
 package GDSC.FirstProject.service.impl;
 
-import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
-import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
-import GDSC.FirstProject.dto.dbDto.originalFeedListDbDto;
+import GDSC.FirstProject.dto.dbDto.*;
 import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
@@ -19,8 +17,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +50,7 @@ public class FeedServiceImpl implements FeedService {
 
         String RandomS3Key = makeRandomS3Key();
 
-        RandomS3Key = RandomS3Key+ "." +concatRandomS3keyAndExtension(requestDto.image_name);
+        RandomS3Key = RandomS3Key + "." + concatRandomS3keyAndExtension(requestDto.image_name);
 
         String url = s3Uploader.upload(requestDto.image, RandomS3Key);
 
@@ -68,28 +65,6 @@ public class FeedServiceImpl implements FeedService {
 
         return url;
     }
-
-    @Override
-    public feedListResponseDto findFeedList_Querydsl(String company_name, Long people_count, List<String> hashtagsListVer, Long page_number) {
-        String[] hashtags = hashtagsListVer != null  ? hashtagsListVer.toArray(new String[hashtagsListVer.size()]) : null;
-        PageRequest pageRequest = PageRequest.of(page_number.intValue(), 10, Sort.by(Sort.Direction.DESC, "createdDate"));
-
-//        Slice<originalFeedListDbDto> slice = feedRepository.findFeedList(company_name, people_count, hashtags, pageRequest);
-        Slice<originalFeedListDbDto> slice = feedRepository.findFeedList_Querydsl(company_name, people_count, hashtags, pageRequest);
-        boolean hasNext = slice.hasNext();
-        Long number = (long) slice.getNumber();
-
-        List<originalFeedListDbDto> feedListBeforeConversion = slice.getContent();
-        distinctFeedListDbDto[] feedListAfterConversion = conversionService.convert(feedListBeforeConversion
-                .toArray(new originalFeedListDbDto[feedListBeforeConversion.size()]), distinctFeedListDbDto[].class);
-
-        return feedListResponseDto.builder()
-                .feedList(feedListAfterConversion)
-                .page_number(number)
-                .hasNext(hasNext)
-                .build();
-    }
-
     @Override
     public feedInfoResponseDto findFeedInfo(Long id) {
         List<feedInfoDbDto> feedInfoDbDtos = feedRepository.findFeedInfo(id)
@@ -110,5 +85,49 @@ public class FeedServiceImpl implements FeedService {
         return people_count.equals("") ? null : Long.valueOf(people_count);
     }
 
+    @Override
+    public feedListResponseDto makeDistinctFeedList(String company_name, Long people_count, List<String> hashtags, Long page_number) {
+        PageRequest pageRequest;
+        String[] hashtagArray = hashtags.toArray(new String[0]);
 
+        pageRequest = PageRequest.of( page_number.intValue(), 5, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Slice<feedListDbDto> feedListQuerydslFixed = feedRepository.findFeedList_QuerydslFixed(company_name, people_count, hashtagArray, pageRequest);
+        pageRequest = PageRequest.of( page_number.intValue(), 50, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Slice<PartOfFeedListDbDto> partOfFeedListQuerydsl = feedRepository.findPartOfFeedList_Querydsl(company_name, people_count, hashtagArray, pageRequest);
+
+        List<feedListDbDto> feedListDbDtos = feedListQuerydslFixed.getContent();
+        List<PartOfFeedListDbDto> partOfFeedListDbDtos = partOfFeedListQuerydsl.getContent();
+
+        distinctFeedListDbDto[] result = new distinctFeedListDbDto[feedListDbDtos.size()];
+        distinctFeedListDbDto temp;
+        Map<Long, Set<String>> map = new HashMap<>();
+        for (PartOfFeedListDbDto dto : partOfFeedListDbDtos) {
+            Long feedId = dto.getFeed_id();
+            String hashtag = dto.getHashtag();
+            if (map.containsKey(feedId)) {
+                map.get(feedId).add(hashtag);
+            } else {
+                Set<String> hashtagsSet = new HashSet<>();
+                hashtagsSet.add(hashtag);
+                map.put(feedId, hashtagsSet);
+            }
+        }
+
+        for (int i = 0; i < feedListDbDtos.size(); i++) {
+            temp = new distinctFeedListDbDto(
+                    feedListDbDtos.get(i).feed_id,
+                    feedListDbDtos.get(i).image,
+                    feedListDbDtos.get(i).people_count,
+                    feedListDbDtos.get(i).company_name,
+                    map.get(feedListDbDtos.get(i).getFeed_id())
+                            .toArray(new String[map.get(feedListDbDtos.get(i).getFeed_id()).size()]));
+            result[i] = temp;
+        }
+
+        return feedListResponseDto.builder()
+                .feedList(result)
+                .page_number(page_number)
+                .hasNext(feedListQuerydslFixed.hasNext())
+                .build();
+    }
 }
