@@ -33,7 +33,7 @@ public class Member {
     @CreatedDate
     private LocalDateTime CreatedTime;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Feed> feedList = new ArrayList<>();
 
     public Member(String uid, String nickName, String email) {

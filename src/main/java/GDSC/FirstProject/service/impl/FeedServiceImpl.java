@@ -65,6 +65,10 @@ public class FeedServiceImpl implements FeedService {
 
         Feed saveFeed = feedRepository.save(new Feed(requestDto, RandomS3Key, findMember, findCompany));
 
+        List<Feed> findMemberFeedList = findMember.getFeedList();
+        findMemberFeedList.add(saveFeed);
+        findMember.setFeedList(findMemberFeedList);
+
         for (String hashtag : requestDto.hashtags) {
             Hashtag findHashtag = hashtagRepository.findByvalue(hashtag).orElseThrow(() -> new IllegalArgumentException("해시태그가 존재하지 않습니다."));
             feedHashtagRepository.save(new FeedHashtag(saveFeed, findHashtag));
