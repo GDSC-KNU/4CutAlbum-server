@@ -3,6 +3,7 @@ package GDSC.FirstProject.repository;
 import GDSC.FirstProject.dto.dbDto.PartOfFeedListDbDto;
 import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
 import GDSC.FirstProject.dto.dbDto.feedListDbDto;
+import GDSC.FirstProject.entity.Feed;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -71,6 +72,19 @@ public class FeedRepositoryTest {
         for (PartOfFeedListDbDto partOfFeedListDbDto : result) {
             System.out.println("partOfFeedListDbDto = " + partOfFeedListDbDto);
         }
+
+    }
+
+    @Test
+    public void deleteFeedTest() throws Exception{
+        //given
+
+        //when
+        feedRepository.deleteFeedById(2156L);
+
+        //then
+        Feed findFeed = feedRepository.findById(2156L).get();
+        assertThat(findFeed).isNull();
 
     }
 }
