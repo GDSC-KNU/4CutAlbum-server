@@ -52,7 +52,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public String saveFeed(createFeedRequestDto requestDto) {
+    public Long saveFeed(createFeedRequestDto requestDto) {
         Member findMember = memberRepository.findById(Long.valueOf(requestDto.uid)).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
         String RandomS3Key = makeRandomS3Key();
@@ -74,7 +74,7 @@ public class FeedServiceImpl implements FeedService {
             feedHashtagRepository.save(new FeedHashtag(saveFeed, findHashtag));
         }
 
-        return url;
+        return saveFeed.getId();
     }
     @Override
     public feedInfoResponseDto findFeedInfo(Long id) {
