@@ -5,7 +5,9 @@ plugins {
 }
 
 group = 'GDSC'
+
 version = '0.1.9-SNAPSHOT'
+
 sourceCompatibility = '17'
 
 configurations {
