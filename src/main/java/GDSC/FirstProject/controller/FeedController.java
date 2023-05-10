@@ -24,10 +24,10 @@ public class FeedController {
     private final FeedService feedService;
 
     @PostMapping
-    public Map<String, String> saveFeed(@RequestBody createFeedRequestDto requestDto){
-        Map<String, String> response = new HashMap<>();
-        String url = feedService.saveFeed(requestDto);
-        response.put("url", url);
+    public Map<String, Long> saveFeed(@RequestBody createFeedRequestDto requestDto){
+        Map<String, Long> response = new HashMap<>();
+        Long saveFeeID = feedService.saveFeed(requestDto);
+        response.put("saveFeeID", saveFeeID);
         return response;
     }
     @GetMapping("/list")
