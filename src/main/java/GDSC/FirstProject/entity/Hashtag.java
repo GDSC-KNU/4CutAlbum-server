@@ -17,4 +17,8 @@ public class Hashtag {
     private Long id;
 
     private String value;
+
+    public Hashtag(String value) {
+        this.value = value;
+    }
 }
