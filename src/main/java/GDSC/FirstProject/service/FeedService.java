@@ -12,7 +12,7 @@ public interface FeedService {
 
     String concatRandomS3keyAndExtension(String FileNameExtension);
 
-    String saveFeed(createFeedRequestDto requestDto);
+    Long saveFeed(createFeedRequestDto requestDto);
 
     feedInfoResponseDto findFeedInfo(Long id);
 
