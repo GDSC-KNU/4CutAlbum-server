@@ -27,7 +27,7 @@ public class FeedController {
     public Map<String, Long> saveFeed(@RequestBody createFeedRequestDto requestDto){
         Map<String, Long> response = new HashMap<>();
         Long saveFeeID = feedService.saveFeed(requestDto);
-        response.put("saveFeeID", saveFeeID);
+        response.put("saveFeedID", saveFeeID);
         return response;
     }
     @GetMapping("/list")
