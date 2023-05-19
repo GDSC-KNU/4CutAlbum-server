@@ -1,4 +1,4 @@
-package GDSC.FirstProject.s3;
+package GDSC.FirstProject.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

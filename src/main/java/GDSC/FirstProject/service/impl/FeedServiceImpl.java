@@ -9,9 +9,8 @@ import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import GDSC.FirstProject.entity.*;
 import GDSC.FirstProject.repository.*;
-import GDSC.FirstProject.s3.S3Deleter;
-import GDSC.FirstProject.s3.S3Uploader;
 import GDSC.FirstProject.service.FeedService;
+import GDSC.FirstProject.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,8 +32,7 @@ public class FeedServiceImpl implements FeedService {
     public final HashtagRepository hashtagRepository;
     public final FeedHashtagRepository feedHashtagRepository;
     public final FeedRepository feedRepository;
-    public final S3Uploader s3Uploader;
-    public final S3Deleter s3Deleter;
+    public final S3Service s3Service;
     public final ConversionService conversionService;
 
     @Value("${cloud.aws.s3.url}")
@@ -59,7 +57,7 @@ public class FeedServiceImpl implements FeedService {
 
         RandomS3Key = RandomS3Key + "." + concatRandomS3keyAndExtension(requestDto.image_name);
 
-        String url = s3Uploader.upload(requestDto.image, RandomS3Key);
+        String url = s3Service.upload(requestDto.image, RandomS3Key);
 
         Company findCompany = companyRepository.findByvalue(requestDto.company).orElseThrow(() -> new IllegalArgumentException("회사가 존재하지 않습니다."));
 
@@ -88,7 +86,7 @@ public class FeedServiceImpl implements FeedService {
     public void deleteFeedById(Long id) {
         List<feedInfoDbDto> findFeed = feedRepository.findFeedInfo(id).orElseThrow(() -> new IllegalArgumentException("피드가 존재하지 않습니다."));
         feedRepository.deleteById(id);
-        s3Deleter.delete(findFeed.get(0).getS3_key());
+        s3Service.delete(findFeed.get(0).getS3_key());
     }
 
     @Override
