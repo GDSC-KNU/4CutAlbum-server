@@ -39,7 +39,7 @@ public class Feed {
 
     private Long likes;
 
-    public String comment;
+    private String comment;
 
     public Feed(createFeedRequestDto requestDto, String s3Key, Member member, Company company){
         this.likes = 0L;
