@@ -1,5 +1,6 @@
 package GDSC.FirstProject.entity;
 
+import GDSC.FirstProject.dto.requsetDto.UpdateFeedRequestDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,7 +39,7 @@ public class Feed {
 
     private Long likes;
 
-    public String comment;
+    private String comment;
 
     public Feed(createFeedRequestDto requestDto, String s3Key, Member member, Company company){
         this.likes = 0L;
@@ -48,5 +49,21 @@ public class Feed {
         this.member = member;
         this.company = company;
         this.comment = requestDto.comment;
+    }
+
+    public void update(UpdateFeedRequestDto dto){
+        if (dto.getPeopleCount() != 0) this.peopleCount = dto.getPeopleCount();
+        if (!dto.getComment().equals("")) this.comment = dto.getComment();
+    }
+
+    public void updateCompany(Company company){
+        this.company = company;
+    }
+
+    public void updateHashtag(List<Hashtag> hashtagList) {
+        this.feedHashtagList.clear();
+        for (Hashtag hashtag: hashtagList) {
+            this.feedHashtagList.add(new FeedHashtag(this, hashtag));
+        }
     }
 }

@@ -1,8 +1,11 @@
 package GDSC.FirstProject.controller;
 
+import GDSC.FirstProject.dto.requsetDto.UpdateFeedRequestDto;
 import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
+import GDSC.FirstProject.message.ResponseService;
+import GDSC.FirstProject.message.SingleResponse;
 import GDSC.FirstProject.service.FeedService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,13 @@ import java.util.Map;
 public class FeedController {
 
     private final FeedService feedService;
+    private final ResponseService responseService;
+
+    @PutMapping
+    public SingleResponse<Long> updateFeed(@RequestBody UpdateFeedRequestDto requestDto) {
+        Long updateFeedID = feedService.updateFeed(requestDto);
+        return responseService.getSingleResponse(updateFeedID);
+    }
 
     @PostMapping
     public Map<String, Long> saveFeed(@RequestBody createFeedRequestDto requestDto){

@@ -4,6 +4,7 @@ import GDSC.FirstProject.dto.dbDto.PartOfFeedListDbDto;
 import GDSC.FirstProject.dto.dbDto.distinctFeedListDbDto;
 import GDSC.FirstProject.dto.dbDto.feedInfoDbDto;
 import GDSC.FirstProject.dto.dbDto.feedListDbDto;
+import GDSC.FirstProject.dto.requsetDto.UpdateFeedRequestDto;
 import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -80,6 +82,33 @@ public class FeedServiceImpl implements FeedService {
                 .orElseThrow(() -> new IllegalArgumentException("피드가 존재하지 않습니다."));
 
         return conversionService.convert(feedInfoDbDtos, feedInfoResponseDto.class);
+    }
+
+    @Override
+    @Transactional
+    public Long updateFeed(UpdateFeedRequestDto requestDto) {
+        Feed feed = feedRepository.findById(Long.valueOf(requestDto.getUid()))
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 피드입니다."));
+
+        if (!requestDto.getCompany().equals("")){
+            Company company = companyRepository.findByvalue(requestDto.getCompany())
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회사입니다."));
+            feed.updateCompany(company);
+        }
+
+        if (!(requestDto.getHashtags().length == 0)) {
+            List<Hashtag> hashtagList = new ArrayList<>();
+            for (String hashtagValue: requestDto.getHashtags()) {
+                Hashtag hashtag = hashtagRepository.findByvalue(hashtagValue)
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 해시태그입니다."));
+                hashtagList.add(hashtag);
+            }
+            feed.updateHashtag(hashtagList);
+        }
+
+        feed.update(requestDto);
+
+        return feed.getId();
     }
 
     @Override
