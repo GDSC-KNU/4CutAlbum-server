@@ -1,5 +1,6 @@
 package GDSC.FirstProject.service;
 
+import GDSC.FirstProject.dto.requsetDto.UpdateFeedRequestDto;
 import GDSC.FirstProject.dto.reponseDto.feedInfoResponseDto;
 import GDSC.FirstProject.dto.reponseDto.feedListResponseDto;
 import GDSC.FirstProject.dto.requsetDto.createFeedRequestDto;
@@ -15,6 +16,8 @@ public interface FeedService {
     Long saveFeed(createFeedRequestDto requestDto);
 
     feedInfoResponseDto findFeedInfo(Long id);
+
+    Long updateFeed(UpdateFeedRequestDto requestDto);
 
     void deleteFeedById(Long id);
 
