@@ -127,7 +127,7 @@ public class FeedServiceImpl implements FeedService {
         PageRequest pageRequest;
         String[] hashtagArray = hashtags.toArray(new String[0]);
 
-        pageRequest = PageRequest.of( page_number.intValue(), 5, Sort.by(Sort.Direction.DESC, "createdDate"));
+        pageRequest = PageRequest.of( page_number.intValue(), 15, Sort.by(Sort.Direction.DESC, "createdDate"));
         Slice<feedListDbDto> feedListQuerydslFixed = feedRepository.findFeedList_Querydsl(company_name, people_count, hashtagArray, pageRequest);
         pageRequest = PageRequest.of( page_number.intValue(), 50, Sort.by(Sort.Direction.DESC, "createdDate"));
 
