@@ -1,7 +1,7 @@
 package GDSC.FirstProject.service.impl;
 
 import GDSC.FirstProject.service.S3Service;
-import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -21,7 +21,7 @@ import java.util.Base64;
 @Service
 public class S3ServiceImpl implements S3Service {
 
-    private final AmazonS3 amazonS3Client;
+    private final AmazonS3Client amazonS3Client;
 
     private final TransferManager transferManager;
 
