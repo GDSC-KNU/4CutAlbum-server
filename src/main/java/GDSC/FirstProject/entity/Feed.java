@@ -52,7 +52,7 @@ public class Feed {
     }
 
     public void update(UpdateFeedRequestDto dto){
-        if (dto.getPeopleCount() != 0) this.peopleCount = dto.getPeopleCount();
+        if (dto.getPeopleCount() != 0) this.peopleCount = Long.valueOf(dto.getPeopleCount());
         if (!dto.getComment().equals("")) this.comment = dto.getComment();
     }
 

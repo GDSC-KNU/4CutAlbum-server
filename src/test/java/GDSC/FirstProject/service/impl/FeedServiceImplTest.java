@@ -95,7 +95,7 @@ class FeedServiceImplTest {
     public void 피드_수정_테스트() throws Exception {
         //given
         String[] hashtags = {};
-        UpdateFeedRequestDto dto = new UpdateFeedRequestDto("2252", hashtags, 0L, "", "");
+        UpdateFeedRequestDto dto = new UpdateFeedRequestDto("1", hashtags, 0, "", "");
 
         Feed initialFeed = feedRepository.findById(Long.valueOf(dto.getUid()))
                 .orElseThrow(() -> new IllegalAccessError("피드가 존재하지 않습니다."));

@@ -15,7 +15,7 @@ public class UpdateFeedRequestDto {
 
     private String[] hashtags;
 
-    private Long peopleCount;
+    private Integer peopleCount;
 
     private String company;
 
